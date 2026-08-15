@@ -1,9 +1,13 @@
+import os
 def cargar_tareas():
-    tareas = []
-    with open("tareas.txt", "r") as archivo:
-        for tarea in archivo:
-            tareas.append(tarea.strip())
-    return tareas
+    if os.path.exists("tareas.txt"):
+        tareas = []
+        with open("tareas.txt", "r") as archivo:
+            for tarea in archivo:
+                tareas.append(tarea.strip())
+        return tareas
+    else:
+        return []
 def guardar_tareas(tareas):
     with open("tareas.txt" , "w") as archivo:
         for tarea in tareas:
@@ -22,6 +26,7 @@ def eliminar_tareas(tareas):
     eliminando = input("Ingrese la tarea a eliminar: ")
     if eliminando in tareas:
         tareas.remove(eliminando)
+        guardar_tareas(tareas)
         print(f"Tarea '{eliminando}' eliminada.")
     else:
         print(f"Tarea '{eliminando}' no encontrada.")
